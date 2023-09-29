@@ -7,10 +7,26 @@ using System.Data.Common;
 
 public class Cadeteria
 {
+    private static Cadeteria? cadeteria;
+
+    public Cadeteria GetCadeteria()
+    {
+        if (cadeteria == null)
+        {
+            cadeteria = new Cadeteria();
+        }
+        return cadeteria;
+    }
+    //falta singleton eso
+
     private string? nombre;
     private string? telefono;
     private List<Cadete>? listadoCadetes;
-    private List<Pedido> listadoPedidos;
+    private List<Pedido>? listadoPedidos;
+    
+    public Cadeteria()
+    {
+    }
 
     public Cadeteria(string nombre, string telefono)
     {
@@ -24,6 +40,16 @@ public class Cadeteria
     public string? Telefono { get => telefono; set => telefono = value; }
 
     //metodos
+
+    public List<Pedido> GetPedidos()
+    {
+        return this.listadoPedidos;
+    }
+
+    public List<Cadete> GetCadetes()
+    {
+        return this.listadoCadetes;
+    }
 
     public void AgregarCadetes(List<Cadete> listadoCadetes)
     {
@@ -46,43 +72,27 @@ public class Cadeteria
 
     public void AsignarCadeteAPedido(int idPedido, int idCadete)
     {
-        Cadete? cadeteElegido = listadoCadetes.Find(c => c.Id == idCadete);
+        Cadete? cadeteElegido = listadoCadetes.Find(c => c.Id == idCadete);        
+        Pedido? pedidoAsignar = listadoPedidos.Find(p => p.Numero == idPedido);
+        
+        pedidoAsignar.Cadete = cadeteElegido;
 
-        foreach (var pedido in listadoPedidos)
-        {
-            if (pedido.Numero == idPedido)
-            {
-                pedido.Cadete = cadeteElegido;
-            }
-        }
     }
 
-        public Pedido BuscarPedido(int idPedido)
+    public Pedido BuscarPedido(int idPedido)
     {
-        Pedido pedidoBuscado = new Pedido();
-        
-        foreach (var p in listadoPedidos)
-        {
-            if (p.Numero == idPedido)
-            {
-                pedidoBuscado = p;
-                break;
-            }
-        }
+        Pedido? pedidoBuscado = new Pedido();
+
+        pedidoBuscado = listadoPedidos.Find(p => p.Numero == idPedido);
 
         return pedidoBuscado;
     }
 
     public void EliminarPedido(int idPedido)
     {
-        foreach (var pedido in listadoPedidos)
-        {
-            if (pedido.Numero == idPedido)
-            {
-                listadoPedidos.Remove(pedido);
-                break;
-            }
-        }
+        
+        Pedido? pedidoEliminar = listadoPedidos.Find(p => p.Numero == idPedido);
+        listadoPedidos.Remove(pedidoEliminar);
     }
 
     public float JornalACobrar(int idCadete)
@@ -106,12 +116,5 @@ public class Cadeteria
     {
         int total = listadoPedidos.Count(p => p.Cadete.Id == idCadete && p.Estado == Estado.Entregado);
         return total;
-    }
-
-    public void Informe(List<Cadete> listadoCadetes, int idCadete)
-    {
-        Console.WriteLine("-------INFORME-------");
-        Console.WriteLine("Monto ganado: " + JornalACobrar(idCadete));
-        Console.WriteLine("Cantidad de envios: " + CantidadEnviosPorCadete(idCadete));
     }
 }
