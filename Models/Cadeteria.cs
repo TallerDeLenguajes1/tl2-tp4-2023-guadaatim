@@ -18,7 +18,7 @@ public class Cadeteria
     {
         if (instance == null)
         {
-            instance = new Cadeteria();
+            //instance = new Cadeteria();
             Random random = new Random();
             var HelperJSON = new AccesoJSON();
             List<Cadeteria> listaCadeterias = HelperJSON.LeerArchivoCadeteria("Cadeterias.json");
