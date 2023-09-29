@@ -12,14 +12,13 @@ namespace CadeteriaController;
 
 public class CadeteriaController : ControllerBase
 {
-    private Cadeteria? cadeteria;
-
+    private static Cadeteria? cadeteria;
     private readonly ILogger<CadeteriaController> logger;
 
     public CadeteriaController(ILogger<CadeteriaController> logger)
     {
         this.logger = logger;
-        cadeteria = cadeteria.GetCadeteria();
+        cadeteria = Cadeteria.GetInstance();
     }
 
     [HttpGet("GetPedidos")]
