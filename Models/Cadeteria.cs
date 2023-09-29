@@ -2,27 +2,31 @@ namespace EspacioCadeteria;
 using EspacioCadete;
 using EspacioPedido;
 using EspacioCliente;
+using EspacioAccesoADatos;
 using System.ComponentModel;
 using System.Data.Common;
 
 public class Cadeteria
 {
-    private static Cadeteria? cadeteria;
-
-    public Cadeteria GetCadeteria()
-    {
-        if (cadeteria == null)
-        {
-            cadeteria = new Cadeteria();
-        }
-        return cadeteria;
-    }
-    //falta singleton eso
-
     private string? nombre;
     private string? telefono;
     private List<Cadete>? listadoCadetes;
     private List<Pedido>? listadoPedidos;
+    private static Cadeteria? instance;
+
+    public static Cadeteria GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new Cadeteria();
+            Random random = new Random();
+            var HelperJSON = new AccesoJSON();
+            List<Cadeteria> listaCadeterias = HelperJSON.LeerArchivoCadeteria("Cadeterias.json");
+            instance = listaCadeterias[random.Next(0, listaCadeterias.Count() + 1)];
+            instance.AgregarCadetes(HelperJSON.LeerArchivoCadetes("Cadetes.json"));
+        }
+        return instance;
+    }
     
     public Cadeteria()
     {
