@@ -21,55 +21,61 @@ public class CadeteriaController : ControllerBase
         cadeteria = Cadeteria.GetInstance();
     }
 
+    [HttpGet("GetCadeteria")]
+    public ActionResult<string> GetCadeteria()
+    {
+        return cadeteria.Nombre;
+    }
+
     [HttpGet("GetPedidos")]
     public ActionResult<List<Pedido>> GetPedidos()
     {
-        var pedidos = cadeteria.GetPedidos();
+        List<Pedido> pedidos = cadeteria.GetPedidos();
         return Ok(pedidos);
     }
 
     [HttpGet("GetCadetes")]
     public ActionResult<List<Cadete>> GetCadetes()
     {
-        var cadetes = cadeteria.GetCadetes();
+        List<Cadete> cadetes = cadeteria.GetCadetes();
         return Ok(cadetes);
     }
 
-    [HttpGet]
+    [HttpGet("GetInforme")]
     public ActionResult<string> GetInforme()
     {
-        var informe = new Informe();
+        Informe informe = new Informe();
         return Ok(informe);
     }
 
     [HttpPost("AgregarPedido")]
-    public ActionResult AgregarPedidos(Pedido pedidoNuevo)
+    public ActionResult<Pedido> AgregarPedidos(Pedido pedidoNuevo)
     {
         cadeteria.AgregarPedido(pedidoNuevo);
         return Ok(pedidoNuevo);
     }
 
     [HttpPut("AsignarCadeteAPedido")]
-    public ActionResult AsignarPedido(int idPedido, int idCadete)
+    public ActionResult<Pedido> AsignarPedido(int idPedido, int idCadete)
     {
         cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
-        var pedidoAsignado = cadeteria.BuscarPedido(idPedido);
+        Pedido pedidoAsignado = cadeteria.BuscarPedido(idPedido);
         return Ok(pedidoAsignado);
     }
 
     [HttpPut("CambiarEstado")]
-    public ActionResult CambiarEstadoPedido(int idPedido)
+    public ActionResult<Pedido> CambiarEstadoPedido(int idPedido)
     {
-        var pedidoBuscado = cadeteria.BuscarPedido(idPedido);
+        Pedido pedidoBuscado = cadeteria.BuscarPedido(idPedido);
         pedidoBuscado.CambiarEstado();
         return Ok(pedidoBuscado);
     }
 
     [HttpPut("AsignarCadeteAPedido")]
-    public ActionResult CambiarCadetePedido(int idPedido, int idCadete)
+    public ActionResult<Pedido> CambiarCadetePedido(int idPedido, int idCadete)
     {
         cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
-        var pedido = cadeteria.BuscarPedido(idPedido);
+        Pedido pedido = cadeteria.BuscarPedido(idPedido);
         return Ok(pedido);
     }
 
