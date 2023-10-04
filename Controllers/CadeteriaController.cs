@@ -42,14 +42,14 @@ public class CadeteriaController : ControllerBase
         return Ok(cadetes);
     }
 
-    [HttpGet]
+    [HttpGet("GetInforme")]
     public ActionResult<string> GetInforme()
     {
         var informe = new Informe();
         return Ok(informe);
     }
 
-    [HttpPost]
+    [HttpPost("AgregarPedidos")]
     public ActionResult<Pedido> AgregarPedidos(Pedido pedidoNuevo)
     {
         cadeteria.AgregarPedido(pedidoNuevo);
