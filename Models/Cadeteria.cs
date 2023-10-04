@@ -3,6 +3,9 @@ using EspacioCadete;
 using EspacioPedido;
 using EspacioCliente;
 using EspacioAccesoADatos;
+using EspacioAccesoADatosCadeteria;
+using EspacioAccesoADatosCadetes;
+using EspacioAccesoADatosPedidos;
 using System.ComponentModel;
 using System.Data.Common;
 
@@ -12,17 +15,20 @@ public class Cadeteria
     private string? telefono;
     private List<Cadete>? listadoCadetes;
     private List<Pedido>? listadoPedidos;
+    private AccesoADatosCadetes? accesoCadetes;
+    private AccesoADatosPedidos? accesoPedidos;
     private static Cadeteria? instance;
 
     public static Cadeteria GetInstance()
     {
         if (instance == null)
         {
-            Random random = new Random();
-            var HelperJSON = new AccesoJSON();
-            List<Cadeteria> listaCadeterias = HelperJSON.LeerArchivoCadeteria("Cadeterias.json");
-            instance = listaCadeterias[random.Next(0, listaCadeterias.Count() + 1)];
-            instance.AgregarCadetes(HelperJSON.LeerArchivoCadetes("Cadetes.json"));
+            AccesoADatosCadeteria HelperCadeteria = new();
+            instance = HelperCadeteria.Obtener();
+            
+            instance.AgregarCadetes();
+            
+
         }
         return instance;
     }
@@ -54,9 +60,9 @@ public class Cadeteria
         return this.listadoCadetes;
     }
 
-    public bool AgregarCadetes(List<Cadete> listadoCadetes)
+    public bool AgregarCadetes()
     {
-        this.listadoCadetes = listadoCadetes;
+        this.listadoCadetes = this.accesoCadetes.Obtener();
 
         if (this.listadoCadetes != null)
         {
