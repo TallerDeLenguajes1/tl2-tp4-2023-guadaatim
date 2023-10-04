@@ -10,6 +10,6 @@ public class AccesoADatosCadeteria
         Random random = new Random();
         string? jsonString = File.ReadAllText("Cadeterias.json");
         List<Cadeteria>? listadoCadeterias = JsonSerializer.Deserialize<List<Cadeteria>>(jsonString);
-        return listadoCadeterias[random.Next(0, listadoCadeterias.Count() - 1)];
+        return listadoCadeterias[random.Next(0, 5)];
     }
 }

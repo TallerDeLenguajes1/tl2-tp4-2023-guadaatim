@@ -25,9 +25,10 @@ public class Cadeteria
         {
             AccesoADatosCadeteria HelperCadeteria = new();
             instance = HelperCadeteria.Obtener();
-            
+            instance.accesoCadetes = new AccesoADatosCadetes();
+            instance.accesoPedidos = new AccesoADatosPedidos();
             instance.AgregarCadetes();
-            
+
 
         }
         return instance;
@@ -49,6 +50,19 @@ public class Cadeteria
     public string? Telefono { get => telefono; set => telefono = value; }
 
     //metodos
+    public bool AgregarCadetes()
+    {
+        accesoCadetes = new AccesoADatosCadetes();
+        this.listadoCadetes = this.accesoCadetes.Obtener();
+
+        if (this.listadoCadetes != null)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 
     public List<Pedido> GetPedidos()
     {
@@ -60,18 +74,7 @@ public class Cadeteria
         return this.listadoCadetes;
     }
 
-    public bool AgregarCadetes()
-    {
-        this.listadoCadetes = this.accesoCadetes.Obtener();
 
-        if (this.listadoCadetes != null)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
-    }
 
     public bool DarDeAltaPedido(int num, string observacion, string nombre, string direccion, int telefono, string datosReferenciadeDireccion, int idCadete)
     {
