@@ -49,12 +49,12 @@ public class CadeteriaController : ControllerBase
         return Ok(informe);
     }
 
-    [HttpPost("AgregarPedidos")]
-    public ActionResult<Pedido> AgregarPedidos(Pedido pedidoNuevo)
-    {
-        cadeteria.AgregarPedido(pedidoNuevo);
-        return Ok(pedidoNuevo);
-    }
+    // [HttpPost("AgregarPedidos")]
+    // public ActionResult<Pedido> AgregarPedidos(Pedido pedidoNuevo)
+    // {
+    //     cadeteria.AgregarPedido(pedidoNuevo);
+    //     return Ok(pedidoNuevo);
+    // }
 
     [HttpPut("AsignarPedido")]
     public ActionResult<Pedido> AsignarPedido(int idPedido, int idCadete)

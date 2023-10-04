@@ -27,7 +27,7 @@ public class Cadeteria
             instance.accesoCadetes = new AccesoADatosCadetes();
             instance.accesoPedidos = new AccesoADatosPedidos();
             instance.AgregarCadetes();
-
+            instance.accesoPedidos.Obtener();
 
         }
         return instance;
@@ -51,8 +51,7 @@ public class Cadeteria
     //metodos
     public bool AgregarCadetes()
     {
-        accesoCadetes = new AccesoADatosCadetes();
-        this.listadoCadetes = this.accesoCadetes.Obtener();
+        this.listadoCadetes = accesoCadetes.Obtener();
 
         if (this.listadoCadetes != null)
         {
@@ -73,37 +72,33 @@ public class Cadeteria
         return this.listadoCadetes;
     }
 
-
-
     public bool DarDeAltaPedido(int num, string observacion, string nombre, string direccion, int telefono, string datosReferenciadeDireccion, int idCadete)
     {
         Cliente clienteNuevo = new Cliente(nombre, direccion, telefono, datosReferenciadeDireccion);
         Pedido pedidoNuevo = new Pedido(num, observacion, clienteNuevo);
 
-        bool control = AgregarPedido(pedidoNuevo);
+        listadoPedidos.Add(pedidoNuevo);
+        accesoPedidos.Guardar(listadoPedidos);
+
         AsignarCadeteAPedido(pedidoNuevo.Numero, idCadete);
 
-        if (control)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+
+        return true;
     }
 
-    public bool AgregarPedido(Pedido pedidoNuevo)
-    {
-        listadoPedidos.Add(pedidoNuevo);
+    // public bool AgregarPedido()
+    // {
+    //     listadoPedidos.Add(pedidoNuevo);
+    //     accesoPedidos.Guardar(listadoPedidos);
 
-        if((listadoPedidos.Find(p => p.Numero == pedidoNuevo.Numero) != null))
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
-    }
+    //     if((listadoPedidos.Find(p => p.Numero == pedidoNuevo.Numero) != null))
+    //     {
+    //         return true;
+    //     } else
+    //     {
+    //         return false;
+    //     }
+    // }
 
     public bool AsignarCadeteAPedido(int idPedido, int idCadete)
     {
@@ -111,6 +106,7 @@ public class Cadeteria
         Pedido? pedidoAsignar = listadoPedidos.Find(p => p.Numero == idPedido);
         
         pedidoAsignar.Cadete = cadeteElegido;
+        accesoPedidos.Guardar(listadoPedidos);
 
         if (pedidoAsignar.Cadete != null)
         {
@@ -133,9 +129,9 @@ public class Cadeteria
 
     public bool EliminarPedido(int idPedido)
     {
-        
         Pedido? pedidoEliminar = listadoPedidos.Find(p => p.Numero == idPedido);
         listadoPedidos.Remove(pedidoEliminar);
+        accesoPedidos.Guardar(listadoPedidos);
 
         if ((listadoPedidos.Find(p => p.Numero == pedidoEliminar.Numero) != null))
         {
