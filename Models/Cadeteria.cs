@@ -64,7 +64,7 @@ public class Cadeteria
 
     public List<Pedido> GetPedidos()
     {
-        return this.listadoPedidos;
+        return accesoPedidos.Obtener();
     }
 
     public List<Cadete> GetCadetes()
@@ -77,28 +77,26 @@ public class Cadeteria
         Cliente clienteNuevo = new Cliente(nombre, direccion, telefono, datosReferenciadeDireccion);
         Pedido pedidoNuevo = new Pedido(num, observacion, clienteNuevo);
 
-        listadoPedidos.Add(pedidoNuevo);
-        accesoPedidos.Guardar(listadoPedidos);
-
+        AgregarPedido(pedidoNuevo);
         AsignarCadeteAPedido(pedidoNuevo.Numero, idCadete);
-
 
         return true;
     }
 
-    // public bool AgregarPedido()
-    // {
-    //     listadoPedidos.Add(pedidoNuevo);
-    //     accesoPedidos.Guardar(listadoPedidos);
-
-    //     if((listadoPedidos.Find(p => p.Numero == pedidoNuevo.Numero) != null))
-    //     {
-    //         return true;
-    //     } else
-    //     {
-    //         return false;
-    //     }
-    // }
+    public bool AgregarPedido(Pedido pedidoNuevo)
+    {
+        listadoPedidos = accesoPedidos.Obtener();
+        listadoPedidos.Add(pedidoNuevo);
+        pedidoNuevo.Numero = listadoPedidos.Count();
+        
+        if (accesoPedidos.Guardar(listadoPedidos))
+        {
+            return true;    
+        } else
+        {
+            return false;
+        }
+    }
 
     public bool AsignarCadeteAPedido(int idPedido, int idCadete)
     {

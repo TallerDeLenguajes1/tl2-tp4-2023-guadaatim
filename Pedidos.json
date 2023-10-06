@@ -1,0 +1,19 @@
+[
+    {
+        "Numero": 1,
+        "Observacion": null,
+        "Estado": 0,
+        "Cadete": null
+    },
+    {
+        "Numero": 2,
+        "Observacion": null,
+        "Estado": 0,
+        "Cadete": {
+            "Id": 0,
+            "Nombre": "string",
+            "Direccion": "string",
+            "Telefono": "string"
+        }
+    }
+]

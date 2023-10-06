@@ -30,7 +30,7 @@ public class Pedido
         Cadete = new Cadete();
     }
 
-    public int Numero { get => numero;}
+    public int Numero { get => numero; set => numero = value; }
     public string? Observacion { get => observacion; }
     public Estado Estado { get => estado;}
     public Cadete? Cadete { get => cadete; set => cadete = value; }
