@@ -77,15 +77,16 @@ public class Cadeteria
         Cliente clienteNuevo = new Cliente(nombre, direccion, telefono, datosReferenciadeDireccion);
         Pedido pedidoNuevo = new Pedido(num, observacion, clienteNuevo);
 
-        AgregarPedido(pedidoNuevo);
-        AsignarCadeteAPedido(pedidoNuevo.Numero, idCadete);
+        
+        //AgregarPedido(pedidoNuevo);
 
         return true;
     }
 
-    public bool AgregarPedido(Pedido pedidoNuevo)
+    public bool AgregarPedido(Pedido pedidoNuevo, int idCadete)
     {
         listadoPedidos = accesoPedidos.Obtener();
+        pedidoNuevo = AsignarCadeteAPedido(pedidoNuevo, idCadete);
         listadoPedidos.Add(pedidoNuevo);
         pedidoNuevo.Numero = listadoPedidos.Count();
         
@@ -98,33 +99,36 @@ public class Cadeteria
         }
     }
 
-    public bool AsignarCadeteAPedido(int idPedido, int idCadete)
+//controlar
+    public Pedido AsignarCadeteAPedido(Pedido pedidoAsignar, int idCadete)
     {
-        Cadete? cadeteElegido = listadoCadetes.Find(c => c.Id == idCadete);        
-        Pedido? pedidoAsignar = listadoPedidos.Find(p => p.Numero == idPedido);
+        listadoCadetes = accesoCadetes.Obtener();
+        Cadete? cadeteElegido = listadoCadetes.FirstOrDefault(c => c.Id == idCadete);   
         
         pedidoAsignar.Cadete = cadeteElegido;
-        accesoPedidos.Guardar(listadoPedidos);
 
-        if (pedidoAsignar.Cadete != null)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
-
+        return pedidoAsignar;
     }
 
     public Pedido BuscarPedido(int idPedido)
     {
-        Pedido? pedidoBuscado = new Pedido();
-
-        pedidoBuscado = listadoPedidos.Find(p => p.Numero == idPedido);
+        listadoPedidos = accesoPedidos.Obtener();
+        Pedido? pedidoBuscado = listadoPedidos.Find(p => p.Numero == idPedido);
 
         return pedidoBuscado;
     }
 
+//controlar
+    public bool CambiarEstadoPedido(int idPedido)
+    {
+        listadoPedidos = accesoPedidos.Obtener();
+        Pedido? pedidoCambiar = listadoPedidos.FirstOrDefault(p => p.Numero == idPedido);
+        pedidoCambiar.CambiarEstado();
+        listadoPedidos.Add(pedidoCambiar);
+        accesoPedidos.Guardar(listadoPedidos);
+        return true;
+    }
+//controlar
     public bool EliminarPedido(int idPedido)
     {
         Pedido? pedidoEliminar = listadoPedidos.Find(p => p.Numero == idPedido);

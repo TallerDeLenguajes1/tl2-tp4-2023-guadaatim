@@ -31,8 +31,8 @@ public class Pedido
     }
 
     public int Numero { get => numero; set => numero = value; }
-    public string? Observacion { get => observacion; }
-    public Estado Estado { get => estado;}
+    public string? Observacion { get => observacion; set => observacion = value; }
+    public Estado Estado { get => estado; set => estado = value; }
     public Cadete? Cadete { get => cadete; set => cadete = value; }
 
     public void AgregarCliente(Cliente clienteNuevo)

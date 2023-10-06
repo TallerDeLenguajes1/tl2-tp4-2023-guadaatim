@@ -1,19 +1,13 @@
 [
     {
         "Numero": 1,
-        "Observacion": null,
-        "Estado": 0,
-        "Cadete": null
-    },
-    {
-        "Numero": 2,
-        "Observacion": null,
-        "Estado": 0,
+        "Observacion": "con cheddar",
+        "Estado": 1,
         "Cadete": {
-            "Id": 0,
-            "Nombre": "string",
-            "Direccion": "string",
-            "Telefono": "string"
+            "Id": 5,
+            "Nombre": "Noemi",
+            "Direccion": "Colombia 3456",
+            "Telefono": "3813342123"
         }
     }
 ]

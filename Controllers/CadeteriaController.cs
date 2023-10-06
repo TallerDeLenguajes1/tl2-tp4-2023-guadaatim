@@ -50,9 +50,9 @@ public class CadeteriaController : ControllerBase
     }
 
     [HttpPost("AgregarPedidos")]
-    public ActionResult<Pedido> AgregarPedidos(Pedido pedidoNuevo)
+    public ActionResult<Pedido> AgregarPedidos(Pedido pedidoNuevo, int idCadete)
     {
-        bool control = cadeteria.AgregarPedido(pedidoNuevo);
+        bool control = cadeteria.AgregarPedido(pedidoNuevo, idCadete);
         if (control)
         {
             return Ok(pedidoNuevo);
@@ -65,8 +65,8 @@ public class CadeteriaController : ControllerBase
     [HttpPut("AsignarPedido")]
     public ActionResult<Pedido> AsignarPedido(int idPedido, int idCadete)
     {
-        cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
         Pedido pedidoAsignado = cadeteria.BuscarPedido(idPedido);
+        cadeteria.AsignarCadeteAPedido(pedidoAsignado, idCadete);
         return Ok(pedidoAsignado);
     }
 
@@ -81,8 +81,8 @@ public class CadeteriaController : ControllerBase
     [HttpPut("CambiarCadetePedido")]
     public ActionResult<Pedido> CambiarCadetePedido(int idPedido, int idCadete)
     {
-        cadeteria.AsignarCadeteAPedido(idPedido, idCadete);
         Pedido pedido = cadeteria.BuscarPedido(idPedido);
+        cadeteria.AsignarCadeteAPedido(pedido, idCadete);
         return Ok(pedido);
     }
 
