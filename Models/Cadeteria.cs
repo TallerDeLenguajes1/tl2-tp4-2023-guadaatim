@@ -59,6 +59,19 @@ public class Cadeteria
     {
         return this.listadoCadetes;
     }
+
+    public Cadete GetCadete(int idCadete)
+    {
+        Cadete? cadeteBuscado = listadoCadetes.FirstOrDefault(c => c.Id == idCadete);
+
+        if (cadeteBuscado != null)
+        {
+            return cadeteBuscado;
+        } else
+        {
+            return null;
+        }
+    }
     
     public bool AgregarPedido(Pedido pedidoNuevo, int idCadete)
     {
@@ -66,10 +79,26 @@ public class Cadeteria
         pedidoNuevo = AsignarCadeteAPedido(pedidoNuevo, idCadete);
         listadoPedidos.Add(pedidoNuevo);
         pedidoNuevo.Numero = listadoPedidos.Count();
+        bool control = accesoPedidos.Guardar(listadoPedidos); 
         
-        if (accesoPedidos.Guardar(listadoPedidos))
+        if (control)
         {
             return true;    
+        } else
+        {
+            return false;
+        }
+    }
+
+    public bool AgregarCadete(Cadete cadeteNuevo)
+    {
+        listadoCadetes.Add(cadeteNuevo);
+        cadeteNuevo.Id = listadoCadetes.Count();
+        bool control = accesoCadetes.Guardar(listadoCadetes);
+
+        if (control)
+        {
+            return true;
         } else
         {
             return false;
