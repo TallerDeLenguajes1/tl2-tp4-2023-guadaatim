@@ -12,6 +12,8 @@ public class Cadeteria
     private string? telefono;
     private List<Cadete>? listadoCadetes;
     private List<Pedido>? listadoPedidos;
+
+    //singleton
     private static Cadeteria? instance;
 
     public static Cadeteria GetInstance()
