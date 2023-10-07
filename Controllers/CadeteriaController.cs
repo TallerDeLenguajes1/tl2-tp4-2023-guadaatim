@@ -3,29 +3,33 @@ using EspacioCadete;
 using EspacioCadeteria;
 using EspacioInforme;
 using EspacioPedido;
+using EspacioAccesoADatosCadeteria;
+using EspacioAccesoADatosCadetes;
+using EspacioAccesoADatosPedidos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadeteriaController;
 
 [ApiController]
 [Route("[controller]")]
-
 public class CadeteriaController : ControllerBase
 {
     private Cadeteria? cadeteria;
-
     private readonly ILogger<CadeteriaController> logger;
 
     public CadeteriaController(ILogger<CadeteriaController> logger)
     {
         this.logger = logger;
-        cadeteria = Cadeteria.GetInstance();
+        AccesoADatosCadeteria HelperCadeteria = new AccesoADatosCadeteria();
+        AccesoADatosCadetes accesoADatosCadetes = new AccesoADatosCadetes();
+        AccesoADatosPedidos accesoADatosPedidos = new AccesoADatosPedidos();
+        cadeteria = new Cadeteria(HelperCadeteria, accesoADatosCadetes, accesoADatosPedidos);
     }
     
     [HttpGet("GetCadeteria")]
     public ActionResult<string> GetCadeteria()
     {
-        return Ok(cadeteria.Nombre);
+        return Ok(cadeteria.GetNombreCadeteria());
     }
 
     [HttpGet("GetPedidos")]
@@ -73,8 +77,8 @@ public class CadeteriaController : ControllerBase
     [HttpPut("CambiarEstadoPedido")]
     public ActionResult<Pedido> CambiarEstadoPedido(int idPedido)
     {
+        bool control = cadeteria.CambiarEstadoPedido(idPedido);
         Pedido pedidoBuscado = cadeteria.BuscarPedido(idPedido);
-        pedidoBuscado.CambiarEstado();
         return Ok(pedidoBuscado);
     }
 

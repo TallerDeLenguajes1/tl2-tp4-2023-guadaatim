@@ -4,10 +4,32 @@
         "Observacion": "con cheddar",
         "Estado": 1,
         "Cadete": {
-            "Id": 5,
-            "Nombre": "Noemi",
-            "Direccion": "Colombia 3456",
-            "Telefono": "3813342123"
+            "Id": 4,
+            "Nombre": "Mario",
+            "Direccion": "Av. Mate de Luna 2000",
+            "Telefono": "3816783241"
+        }
+    },
+    {
+        "Numero": 2,
+        "Observacion": "sin cebolla",
+        "Estado": 0,
+        "Cadete": {
+            "Id": 7,
+            "Nombre": "Lucia",
+            "Direccion": "Junin 200",
+            "Telefono": "3816757986"
+        }
+    },
+    {
+        "Numero": 3,
+        "Observacion": "con bacon",
+        "Estado": 0,
+        "Cadete": {
+            "Id": 9,
+            "Nombre": "Hernan",
+            "Direccion": "Peru 456",
+            "Telefono": "3814534586"
         }
     }
 ]

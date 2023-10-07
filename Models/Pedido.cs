@@ -55,12 +55,16 @@ public class Pedido
         return cliente.DatosReferenciaDireccion;
     } 
 
-    public void CambiarEstado()
+    public bool CambiarEstado()
     {
         if (estado == Estado.Pendiente )
         {
             estado = Estado.Entregado;
-        } 
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
    public void CancelarPedido()
