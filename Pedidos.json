@@ -31,5 +31,16 @@
             "Direccion": "Peru 456",
             "Telefono": "3814534586"
         }
+    },
+    {
+        "Numero": 4,
+        "Observacion": "sin verduras",
+        "Estado": 1,
+        "Cadete": {
+            "Id": 5,
+            "Nombre": "Noemi",
+            "Direccion": "Colombia 3456",
+            "Telefono": "3813342123"
+        }
     }
 ]

@@ -22,8 +22,8 @@ public class Cadeteria
         Cadeteria cadAux = accesoADatosCadeteria.Obtener();
         this.nombre = cadAux.nombre;
         this.telefono = cadAux.telefono;
-        accesoCadetes = new AccesoADatosCadetes();
-        accesoPedidos = new AccesoADatosPedidos();
+        accesoCadetes = accesoADatosCadetes;
+        accesoPedidos = accesoADatosPedidos;
         //this.AgregarCadetes();
         listadoCadetes = accesoCadetes.Obtener();
         listadoPedidos = accesoPedidos.Obtener();
